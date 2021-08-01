@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body class="container bg-light">
+    <header>
+        <h1>Hello , {{name}}</h1>
+        <a href="/logout" class="btn btn-secondary">Logout</a>
+    </header>
+    <section>
+        <div>
+            <h4>Your wish list</h4>
+            <table class="table table-success table-striped">
+                <tr>
+                    <th>item</th>
+                    <th>Added by</th>
+                    <th>Date added</th>
+                    <th colspan="2" class="table-active">Action</th>
+                </tr>
+                {% for item in items %}
+                    {% if request.session.id == item.created_at.id %}               
+                    <tr>
+                        <td><a href="/wish_item/{{item.id}}">{{item.item_name}}</a></td>
+                        <td>{{item.created_at.first_name}} {{item.created_at.last_name}} </td>
+                        <td>{{item.date_created}}</td>
+                        <td colspan="2" class="table-active"><a href="delete/{{item.id}}">Delete</a></td>
+                        {% if item.add_item.id == request.session.id %}<td><a href="cancel/{{item.id}}">Cancel</a></td>{% endif%} 
+                    </tr>         
+                    {% endif%}
+                {% endfor %}
+                {%for item in items%}
+                <!--{% for a in item.add_item.all %} -->             
+                    <tr>
+                        <td><a href="/wish_item/{{item.id}}">{{item.item_name}}</a></td>
+                        <td>{{a.first_name}} {{a.last_name}} </td>
+                        <td>{{item.date_created}}</td>
+                        <td><a href="delete/{{item.id}}">Delete</a></td>
+                        <td><a href="cancel/{{item.id}}">Cancel</a></td> 
+                    </tr>         
+                    <!--{% endfor %} -->
+                {% endfor %}      
+            </table>
+        </div>
+        <div>
+            <h4>Other users' Wish list </h4>
+            <table class="table table-success table-striped">
+                <tr>
+                    <th>item</th>
+                    <th>Added by</th>
+                    <th>Date added</th>
+                    <th>Action</th>
+                </tr>
+                {% for item in items %}
+                <tr>
+                    <td><a href="/wish_item/{{item.id}}">{{item.item_name}}</a></td>
+                    <td>{{item.created_at.first_name}} {{item.created_at.last_name}} </td>
+                    <td>{{item.date_created}}</td>
+                    <td><a href="/add_item/{{item.id}}">Add to my wish list</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+    <footer>
+        <a href="/wish_item/create" class="btn btn-primary">Add item</a>
+    </footer>
+</body>
+</html>

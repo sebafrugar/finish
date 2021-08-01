@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Login</title>
+</head>
+<body class="container bg-light">
+    <header class="d-flex justify-content-center" >
+        <h1>Welcome!</h1>
+    </header>
+    <div class="container row">
+        <section class="d-inline-block col">
+            <h2>Register</h2>
+            <form action="/register" method="POST">
+                {% csrf_token %}
+                <label for="first_name">First name:</label>
+                <input type="text" placeholder="first_name" name="first_name" id="first_name"><br><br>
+                <label for="last_name">Last name:</label>
+                <input type="text" placeholder="last_name" name="last_name" id="last_name"><br><br>
+                <label for="email">Email:</label>
+                <input type="email" placeholder="Email" name="email" id="email"><br><br>
+                <label for="password">Password:</ñ>
+                <input type="password" placeholder="password" name="password" id="password"><br><br>
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                <label for="password_conf">Password Conf:</label>
+                <input type="password" name="password_conf" id="password_conf"><br><br>
+                <label for="birth">Date of Birth:</label>
+                <input type="date" name="birth" id="birth"><br><br>
+                <input type="submit" placeholder="Register" class="btn btn-primary">
+            </form>
+        </section>
+        <section class="d-inline-block col">
+            <h2>Login</h2>
+            <form action="/login" method="POST">
+                {% csrf_token %}
+                <p>Email: <input type="email" name="login_email"></p>
+                <p>Password: <input type="password" name="login_password"></p>
+                <input type="submit" value="Log In" class="btn btn-primary">
+            </form>
+        </section>
+    </div> 
+</body>
+</html>
